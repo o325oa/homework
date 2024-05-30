@@ -16,6 +16,21 @@ class Student:
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        stdnt = f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашнее задание: {self.grades}\nКурсы в процессе изучения: {self.courses_in_progress}\nОконченые курсы: {self.finished_courses}"
+        return stdnt
+
+    def avg_grades(self):
+        grades_list = sum(self.grades.values(), start=[])
+        return round(sum(grades_list) / len(grades_list), 2)
+
+    def __It__(self, other):
+        if isinstance(other, Student):
+            print('Ошибка')
+            return
+        return self.avg_grades() < other.avg_grades()
+
+
 student_list = []
 student_list.append(Student('Mihail', 'Evdokimov', 'male'))
 student_list.append(Student('Aleksandr', 'Schvetsov', 'male'))
@@ -28,13 +43,21 @@ class Mentor:
         self.surname = surname
         self.courses_attached = []
 
+    def __str__(self):
+        mnt = f'Имя: {self.name}\nФамилия: {self.surname}'
+        return mnt
+
 class Lecturer(Mentor):
     def __init__(self, name, surname):
-        super.__init__(name, surname)
+        super().__init__(name, surname)
         self.name = name
         self.surname = surname
         self.lec = []
         self.grades = {}
+
+    def __str__(self):
+        lctr = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.grades}'
+        return lctr
 
 lecturers_list = []
 lecturers_list.append(Lecturer('Steve', 'Jobs'))
@@ -53,5 +76,12 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+
+mentors_list = []
 mentors_list.append(Reviewer('Konstantin', 'Vorobiev'))
 mentors_list.append(Reviewer('Georgiy', 'Chivchyan'))
+
+mentors_list[0].courses_attached += ['Python', 'Java']
+mentors_list[1].courses_attached += ['Python', 'Java']
+
+
